@@ -6,6 +6,19 @@
 <p><h2>Instalação do Modulo</h2></p>
 <ol>
  <li>Faça download e descompacte dentro da pasta Raiz (geralmente public_html ou www) de seu Whmcs.</li>
+ <li>
+  Ao final da instalação, os arquivos do módulo devem estar na seguinte estrutura no WHMCS:
+<pre>
+includes/hooks/
+ |- dfpixmercadopago.php
+modules/gateways/
+ |- callback/dfpixmercadopago.php
+ |- dfpixmercadopago/
+ |- dfpixmercadopago/.htaccess
+ |- dfpixmercadopago/verqrcode.php
+ |- dfpixmercadopago.php
+</pre>
+ </li>
  <li>Entre em: Portais de Pagamento e ative o modulo <b>Dfpixmercadopago</b>.</li>
 </ol>
 
@@ -13,6 +26,8 @@
 <ol>
  <li><b>Acces Token:</b> Seu Access Token de Produção</li>
 </ol>
+
+
 
 <p><h2>Enviar QrCode por Email</h2></p>
 <p>Basta colcar o comando abaixo nos modelos de email para que o QrCode Pix seja enviado<br />
