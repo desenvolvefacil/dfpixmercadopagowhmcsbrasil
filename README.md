@@ -5,7 +5,7 @@
 
 <p><h2>Instalação do Modulo</h2></p>
 <ol>
- <li>Faça download e descompacte dentro da pasta /modules/gateways/ de seu Whmcs.</li>
+ <li>Faça download e descompacte dentro da pasta Raiz (geralmente public_html ou www) de seu Whmcs.</li>
  <li>Entre em: Portais de Pagamento e ative o modulo <b>Dfpixmercadopago</b>.</li>
 </ol>
 
