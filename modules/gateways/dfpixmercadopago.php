@@ -184,7 +184,12 @@ function dfpixmercadopago_link($params) {
             $CopiaColaPix = "";
             $CancelouFatura = 1;
             
-            logTransaction(PAYMENT_METHOD, json_encode($result), "Pix Cancelado|Geracao De Fatura");
+            $log = [];
+            $log["IdFatura"] = $idfatura;
+            $log["DadosBD"] = $fatbd;
+            $log["RetornoMP"] = $result;
+            
+            logTransaction(PAYMENT_METHOD, json_encode($log), "Pix Cancelado|Geracao De Fatura");
 
         }
     }
@@ -239,7 +244,12 @@ function dfpixmercadopago_link($params) {
         $ImagemQrcode = $result['point_of_interaction']['transaction_data']['qr_code_base64'];
         
         
-        logTransaction(PAYMENT_METHOD,json_encode($result), "Pix Gerado");
+        
+        $log = [];
+        $log["IdFatura"] = $idfatura;
+        $log["RetornoMP"] = $result;
+        
+        logTransaction(PAYMENT_METHOD,json_encode($log), "Pix Gerado");
         
         if($CancelouFatura == 0){
             
@@ -356,7 +366,14 @@ function dfpixmercadopago_refund($params)
             $result = json_decode($response, true);
             //echo "Reembolso criado! Refund ID: " . $result["id"] . " | Status: " . $result["status"];
             
-            logTransaction(PAYMENT_METHOD,json_encode($result), "Pix Reembolsado");
+            
+            
+            $log = [];
+            $log["IdFatura"] = $idfatura;
+            $log["DadosBD"] = $fatbd;
+            $log["RetornoMP"] = $result;
+            
+            logTransaction(PAYMENT_METHOD,json_encode($log), "Pix Reembolsado");
             
             return array(
                 // 'success' if successful, otherwise 'declined', 'error' for failure
