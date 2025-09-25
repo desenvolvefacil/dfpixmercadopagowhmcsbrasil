@@ -16,8 +16,9 @@ define('PAYMENT_METHOD', 'dfpixmercadopago');
 //dfpixmercadopago
 
 
-function dfpixmercadopagocacelarpix($vars)
+function dfpixmercadopagocacelarpix($vars, $metodo)
 {
+
     $idfatura = $vars['invoiceid'];
     
     $credentials = getGatewayVariables(PAYMENT_METHOD);
@@ -34,30 +35,35 @@ function dfpixmercadopagocacelarpix($vars)
                 ->where('idfatura', '=', $idfatura)
                 ->get();
     
-        $IdLocationPix = $fatbd[0]->idlocationpix;
-
-        $url = "https://api.mercadopago.com/v1/payments/".$IdLocationPix;
     
-        $data = [
-            "status" => "cancelled"
-        ];
+        if($fatbd[0]->idlocationpix != ""){
         
+            $IdLocationPix = $fatbd[0]->idlocationpix;
     
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_NUMERIC_CHECK));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Content-Type: application/json",
-            "Authorization: Bearer $access_token"
-        ]);
+            $url = "https://api.mercadopago.com/v1/payments/".$IdLocationPix;
         
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-    
-        $result = json_decode($response, true);
-    
+            $data = [
+                "status" => "cancelled"
+            ];
+            
+        
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_NUMERIC_CHECK));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                "Content-Type: application/json",
+                "Authorization: Bearer $access_token"
+            ]);
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+        
+            $result = json_decode($response, true);
+            
+            logTransaction(PAYMENT_METHOD, $result, "Pix Cancelado|".$metodo);
+         }
      } catch (\Exception $e) {
         
     }
@@ -70,5 +76,15 @@ function dfpixmercadopagocacelarpix($vars)
 
 }
 
-add_hook('InvoiceCancelled', 1, 'dfpixmercadopagocacelarpix');
+
+function dfpifaturacancelada($vars){
+    dfpixmercadopagocacelarpix($vars, "Fatura Cancelada");
+}
+
+function dfpifaturatualizada($vars){
+    dfpixmercadopagocacelarpix($vars, "Fatura Atualizada");
+}
+
+add_hook('InvoiceCancelled', 1, 'dfpifaturacancelada');
+add_hook('UpdateInvoiceTotal', 1, 'dfpifaturatualizada');
 
