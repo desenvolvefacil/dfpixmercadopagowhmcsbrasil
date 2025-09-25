@@ -62,7 +62,7 @@ function dfpixmercadopagocacelarpix($vars, $metodo)
         
             $result = json_decode($response, true);
             
-            logTransaction(PAYMENT_METHOD, $result, "Pix Cancelado|".$metodo);
+            logTransaction(PAYMENT_METHOD,json_encode($result), "Pix Cancelado|".$metodo);
          }
      } catch (\Exception $e) {
         
