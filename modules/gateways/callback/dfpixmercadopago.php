@@ -50,7 +50,7 @@ if (isset($notification["data"]["id"]) && $notification["type"] == "payment") {
             $paymentAmount = $payment["transaction_amount"];
         
         //$transactionStatus = 'Success';
-         
+        logTransaction($gatewayModuleName, json_encode($payment), "Pix Pago");
         
         addInvoicePayment(
                 $idfatura,
