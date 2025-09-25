@@ -214,7 +214,7 @@ function dfpixmercadopago_link($params) {
                     "type"   => $tipodocumento,
                     "number" => $documento,
                 ]
-                /*
+                */
             ],
             "date_of_expiration" => $DataExpiracao,
             "external_reference" => $FaturaTexto,
