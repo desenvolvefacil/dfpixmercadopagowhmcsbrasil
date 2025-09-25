@@ -7,6 +7,9 @@ if (!defined("WHMCS")) {
 }
 
 
+// defina o método de pagamento 
+define('PAYMENT_METHOD', 'dfpixmercadopago');
+
 // dfpixmercadopago
 
 
@@ -180,6 +183,8 @@ function dfpixmercadopago_link($params) {
             
             $CopiaColaPix = "";
             $CancelouFatura = 1;
+            
+            logTransaction(PAYMENT_METHOD, json_encode($result), "Pix Cancelado|Geracao De Fatura");
 
         }
     }
@@ -232,6 +237,9 @@ function dfpixmercadopago_link($params) {
         $IdLocationPix = $result["id"];
         $CopiaColaPix = $result['point_of_interaction']['transaction_data']['qr_code'];
         $ImagemQrcode = $result['point_of_interaction']['transaction_data']['qr_code_base64'];
+        
+        
+        logTransaction(PAYMENT_METHOD,json_encode($result), "Pix Gerado");
         
         if($CancelouFatura == 0){
             
@@ -343,9 +351,12 @@ function dfpixmercadopago_refund($params)
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         
+        
         if ($httpCode == 201) {
             $result = json_decode($response, true);
             //echo "Reembolso criado! Refund ID: " . $result["id"] . " | Status: " . $result["status"];
+            
+            logTransaction(PAYMENT_METHOD,json_encode($result), "Pix Reembolsado");
             
             return array(
                 // 'success' if successful, otherwise 'declined', 'error' for failure
