@@ -206,12 +206,15 @@ function dfpixmercadopago_link($params) {
             "payment_method_id"  => "pix",
             "payer" => [
                 "email" => $email,
+                //Descomentar caso queira enviar os dados do cliente
+                /*
                 "first_name" => $nome,
                 "last_name"  => $sobrenome,
                 "identification" => [
                     "type"   => $tipodocumento,
                     "number" => $documento,
                 ]
+                /*
             ],
             "date_of_expiration" => $DataExpiracao,
             "external_reference" => $FaturaTexto,
