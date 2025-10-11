@@ -4,7 +4,7 @@
 <p>Abrir Conta no Aplicativo Mercado Pago https://mpago.li/1mYaimc</p>
 
 <p><h2>Video Passo a Passo da Instalação e Configuração</h2></p>
-<p>https://youtu.be/tXv65hGuARY</p>
+<p>https://youtu.be/cBk2kBGY4wA</p>
 
 <p><h2>Instalação do Modulo</h2></p>
 <ol>
