@@ -23,7 +23,7 @@ function dfpixmercadopagocacelarpix($vars, $metodo)
         ->first();
 
     if ($modulo) {
-        echo "Módulo '.PAYMENT_METHOD.' está ATIVO!";
+        //echo "Módulo '.PAYMENT_METHOD.' está ATIVO!";
 
         $idfatura = trim($vars["invoiceid"]);
 
