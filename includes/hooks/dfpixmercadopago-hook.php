@@ -18,7 +18,7 @@ function dfpixmercadopagocacelarpix($vars, $metodo)
 {
     $modulo = Capsule::table("tblpaymentgateways")
         ->where("gateway", PAYMENT_METHOD)
-        ->where("setting", "type")
+        ->where("setting", "visible")
         ->where("value", "on")
         ->first();
 
