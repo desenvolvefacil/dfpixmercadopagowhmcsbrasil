@@ -10,30 +10,30 @@ require_once __DIR__ . "/../../init.php";
 use WHMCS\Database\Capsule;
 
 // defina o método de pagamento
-define("PAYMENT_METHOD", "dfpixmercadopago");
+define("PAYMENT_METHOD_MP_PIX", "dfpixmercadopago");
 
 //dfpixmercadopago
 
 function dfpixmercadopagocacelarpix($vars, $metodo)
 {
     $modulo = Capsule::table("tblpaymentgateways")
-        ->where("gateway", PAYMENT_METHOD)
+        ->where("gateway", PAYMENT_METHOD_MP_PIX)
         ->where("setting", "type")
         ->where("value", "Invoices")
         ->first();
 
     if ($modulo) {
-        //echo "Módulo '.PAYMENT_METHOD.' está ATIVO!";
+        //echo "Módulo '.PAYMENT_METHOD_MP_PIX.' está ATIVO!";
 
         $idfatura = trim($vars["invoiceid"]);
 
-        $credentials = getGatewayVariables(PAYMENT_METHOD);
+        $credentials = getGatewayVariables(PAYMENT_METHOD_MP_PIX);
 
         $access_token = $credentials["AccessTokenProducao"];
 
         //busca o id no banco para cancelar
         try {
-            $fatbd = Capsule::table("dfmercadopagopix")
+            $fatbd = Capsule::table(PAYMENT_METHOD_MP_PIX)
                 ->select(
                     "idfatura",
                     "idlocationpix",
@@ -79,7 +79,7 @@ function dfpixmercadopagocacelarpix($vars, $metodo)
                 $log["RetornoMP"] = $result;
 
                 logTransaction(
-                    PAYMENT_METHOD,
+                    PAYMENT_METHOD_MP_PIX,
                     json_encode($log),
                     "Pix Cancelado|" . $metodo
                 );
@@ -99,7 +99,7 @@ function dfpixmercadopagocacelarpix($vars, $metodo)
             ->where("idfatura", "=", $idfatura)
             ->delete();
     } else {
-        //echo "Módulo '.PAYMENT_METHOD.' está INATIVO!";
+        //echo "Módulo '.PAYMENT_METHOD_MP_PIX.' está INATIVO!";
     }
 }
 
