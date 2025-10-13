@@ -1,0 +1,32 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "dfpixmercadopago",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "DF Pix Mercado Pago",
+    "tagline": "Modulo PIX para WHMCS Gratuito com Retorno Automático",
+    "long": "💡 Simplifique a vida dos seus clientes e automatize seus recebimentos com o Módulo WHMCS Mercado Pago PIX da Desenvolve Fácil! 🌟 Principais Benefícios 💼 Como ele transforma seu negócio 📥 Baixe agora e comece a receber via PIX! 🔗 GitHub – DFPix Mercado Pago WHMCS Brasil 💳 Só PIX, rápido, seguro e sem complicação!",
+    "features": [
+      "Geração Automatica do QrCode e Copia e Cola",
+      "Retorno automatico quando o cliente realiza o pagamento",
+      "Reembolso (Total ou Parcial) Automatico via WHMCS",
+      "Log de Portais Aprimorado",
+      "Código Externo no Mercado Pago Vinculado ao Código/Número da Fatura"
+    ]
+  },
+  "logo": {
+    "filename": "logo.png"
+  },
+  "support": {
+    "homepage": "https://www.desenvolvefacil.com.br/",
+    "docs_url": "https://github.com/desenvolvefacil/dfpixmercadopagowhmcsbrasil/"
+  },
+  "authors": [
+    {
+      "name": "Desenvolve Fácil",
+      "homepage": "https://www.desenvolvefacil.com.br/"
+    }
+  ]
+}
