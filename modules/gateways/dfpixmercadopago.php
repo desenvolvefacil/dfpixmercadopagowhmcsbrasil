@@ -7,8 +7,12 @@ if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
 
+
 // defina o método de pagamento 
 define('PAYMENT_METHOD_MP_PIX', 'dfpixmercadopago');
+
+// dfpixmercadopago
+
 
 function dfpixmercadopago_MetaData() {
     return array(
@@ -18,6 +22,7 @@ function dfpixmercadopago_MetaData() {
         'TokenisedStorage' => false,
     );
 }
+
 
 function dfpixmercadopago_config() {
     
@@ -48,6 +53,8 @@ function dfpixmercadopago_config_validate($params)
     if ($params['AccessTokenProducao'] == '') {
         throw new \Exception('O campo AccessTokenProducao não foi preenchido');
     }
+        
+   
     
     if(!Capsule::schema()->hasTable("dfmercadopagopix") ){
         try {
@@ -77,86 +84,7 @@ function dfpixmercadopago_config_validate($params)
 }
 
 
-// =========================
-// VERIFICA ATUALIZAÇÃO
-// =========================
-function dfpixmercadopago_check_update() {
- 
-    $jsonUrl = "https://raw.githubusercontent.com/desenvolvefacil/dfpixmercadopagowhmcsbrasil/main/version.json";
-    $currentVersion = '2.0.0'; // versão atual do módulo
-    
-    $lastCheck = Setting::getValue(PAYMENT_METHOD_MP_PIX . '_last_update_check');
-    $now = time();
-    
-    if (!$lastCheck || ($now - $lastCheck) > 1296000) {
-        Setting::setValue(PAYMENT_METHOD_MP_PIX . '_last_update_check', $now);
-
-        $response = @file_get_contents($jsonUrl);
-        if (!$response) {
-            logModuleCall(PAYMENT_METHOD_MP_PIX, 'Update Check', 'Falha ao buscar JSON', $jsonUrl);
-            return;
-        }
-
-        $data = json_decode($response, true);
-        if (!isset($data['latest_version'])) {
-            logModuleCall(PAYMENT_METHOD_MP_PIX, 'Update Check', 'JSON inválido', $response);
-            return;
-        }
-
-        $latestVersion = $data['latest_version'];
-        if (version_compare($latestVersion, $currentVersion, '>')) {
-            dfpixmercadopago_send_update_email($data, $currentVersion);
-        }
-    }
-}
-
-
-// =========================
-// ENVIA E-MAIL ADMIN VIA API WHMCS
-// =========================
-function dfpixmercadopago_send_update_email($data, $currentVersion) {
-    try {
-        // 🔹 Define dados para o e-mail
-        $postData = [
-            'action' => 'SendAdminEmail',
-            'customsubject' => 'Atualização disponível: Pix Mercado Pago WHMCS',
-            'custommessage' => "
-                <p>Olá,</p>
-                <p>Uma nova versão do módulo <b>Pix Mercado Pago WHMCS</b> está disponível.</p>
-                <p><b>Versão atual:</b> {$currentVersion}<br>
-                <b>Versão disponível:</b> {$data['latest_version']}</p>
-                <p><b>Notas da versão:</b><br>{$data['release_notes']}</p>
-                <p>Baixar nova versão em: <a href='{$data['download_url']}' target='_blank'>{$data['download_url']}</a></p>
-                <hr>
-                <small>Desenvolve Fácil</small>
-            ",
-            'type' => 'system'
-        ];
-
-        // 🔹 Chama a API interna
-        $results = localAPI('SendAdminEmail', $postData, $adminUsername);
-
-        // 🔹 Loga o resultado
-        logModuleCall(
-            'dfpixmercadopago',
-            'SendAdminEmail',
-            $postData,
-            $results,
-            null
-        );
-
-    } catch (Exception $e) {
-        logModuleCall('dfpixmercadopago', 'Update Email Error', $e->getMessage(), '');
-    }
-}
-
-
-
-
-
 function dfpixmercadopago_link($params) {
-    
-    dfpixmercadopago_check_update();
     
     global $CONFIG;
     //dados para retorno automatico
