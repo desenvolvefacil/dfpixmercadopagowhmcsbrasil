@@ -34,7 +34,7 @@
 <dd>Serviços de TI</dd>
 
 <dt>Site (obrigatório)</dt>
-<dd>Digite a url de seu site completa como exemplo: https://desenvolvefacil.com.br</dd>
+<dd>Digite a url de seu site completa como exemplo: https://whmcs.desenvolvefacil.com.br/</dd>
 
 <dt>Access Token</dt>
 <dd>Copie e Salve o Valor gerado no Acess Token para utilizar no Modulo</dd>
