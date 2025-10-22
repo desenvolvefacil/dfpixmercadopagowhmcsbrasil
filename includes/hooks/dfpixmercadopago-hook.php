@@ -91,7 +91,7 @@ function dfpixmercadopagocacelarpix($vars, $metodo)
         }
 
         //exclui a fatura do banco de dados
-        Capsule::table("dfmercadopagopix")
+        Capsule::table(PAYMENT_METHOD_MP_PIX)
             ->select(
                 "idfatura",
                 "idlocationpix",
@@ -179,7 +179,7 @@ add_hook('AdminAreaHeaderOutput', 1, function($vars) {
         
                 // 🔹 Loga o resultado
                 logModuleCall(
-                    'dfpixmercadopago',
+                    PAYMENT_METHOD_MP_PIX,
                     'SendAdminEmail',
                     $postData,
                     $results,
@@ -187,7 +187,7 @@ add_hook('AdminAreaHeaderOutput', 1, function($vars) {
                 );
         
             } catch (Exception $e) {
-                logModuleCall('dfpixmercadopago', 'Update Email Error', $e->getMessage(), '');
+                logModuleCall(PAYMENT_METHOD_MP_PIX, 'Update Email Error', $e->getMessage(), '');
             }
             
         }
