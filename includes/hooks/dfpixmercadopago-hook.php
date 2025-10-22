@@ -129,7 +129,7 @@ add_hook('AdminAreaHeaderOutput', 1, function($vars) {
 
 
     $jsonUrl = "https://raw.githubusercontent.com/desenvolvefacil/dfpixmercadopagowhmcsbrasil/main/version.json";
-    $currentVersion = '3.0.0'; // versão atual do módulo
+    $currentVersion = '3.0.1'; // versão atual do módulo
     
     $lastCheck = Setting::getValue(PAYMENT_METHOD_MP_PIX . '_last_update_check');
     $now = time();
