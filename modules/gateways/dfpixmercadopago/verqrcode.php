@@ -6,10 +6,11 @@ use WHMCS\Database\Capsule;
 
 $idfatura = filter_input(INPUT_GET, 'idfatura', FILTER_SANITIZE_NUMBER_INT);
 
+define('PAYMENT_METHOD_MP_PIX', 'dfpixmercadopago');
 
 try {
 
-        $fatbd = Capsule::table('dfmercadopagopix')
+        $fatbd = Capsule::table(PAYMENT_METHOD_MP_PIX)
                 ->select('idfatura', 'idlocationpix', 'pixcopiacola', 'pixqrcode', 'valor')
                 ->where('idfatura', '=', $idfatura)
                 ->get();
