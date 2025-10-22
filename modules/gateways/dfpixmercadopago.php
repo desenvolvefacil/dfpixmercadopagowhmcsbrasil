@@ -56,11 +56,11 @@ function dfpixmercadopago_config_validate($params)
         
    
     
-    if(!Capsule::schema()->hasTable("dfmercadopagopix") ){
+    if(!Capsule::schema()->hasTable(PAYMENT_METHOD_MP_PIX) ){
         try {
             
         Capsule::schema()->create(
-            'dfmercadopagopix',
+            PAYMENT_METHOD_MP_PIX,
                 function ($table) {
                     /** @var \Illuminate\Database\Schema\Blueprint $table */
                     $table->bigInteger('idfatura')->unsigned();
@@ -117,7 +117,7 @@ function dfpixmercadopago_link($params) {
     //verifica se ja existe a fatura no BD
     try {
 
-        $fatbd = Capsule::table('dfmercadopagopix')
+        $fatbd = Capsule::table(PAYMENT_METHOD_MP_PIX)
                 ->select('idfatura', 'idlocationpix', 'pixcopiacola', 'pixqrcode', 'valor')
                 ->where('idfatura', '=', $idfatura)
                 ->get();
@@ -256,7 +256,7 @@ function dfpixmercadopago_link($params) {
         if($CancelouFatura == 0){
             
         
-            Capsule::table('dfmercadopagopix')->insert(
+            Capsule::table(PAYMENT_METHOD_MP_PIX)->insert(
                     [
                         'idfatura' => $idfatura,
                         'idlocationpix' => $IdLocationPix,
@@ -268,7 +268,7 @@ function dfpixmercadopago_link($params) {
             
         }else{
             
-            Capsule::table('dfmercadopagopix')->where('idfatura', $idfatura)
+            Capsule::table(PAYMENT_METHOD_MP_PIX)->where('idfatura', $idfatura)
                 ->update(
                         [
                             'idlocationpix' => $IdLocationPix,
@@ -335,7 +335,7 @@ function dfpixmercadopago_refund($params)
   //verifica se ja existe a fatura no BD
     try {
 
-        $fatbd = Capsule::table('dfmercadopagopix')
+        $fatbd = Capsule::table(PAYMENT_METHOD_MP_PIX)
                 ->select('idfatura', 'idlocationpix', 'pixcopiacola', 'pixqrcode', 'valor')
                 ->where('idfatura', '=', $idfatura)
                 ->get();
