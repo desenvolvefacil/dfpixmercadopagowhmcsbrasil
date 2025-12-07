@@ -210,10 +210,12 @@ function dfpixmercadopago_link($params) {
                 "email" => $email,
                 "first_name" => $nome,
                 "last_name"  => $sobrenome,
+                /*
                 "identification" => [
                     "type"   => $tipodocumento,
                     "number" => $documento,
                 ]
+                */
             ],
             "date_of_expiration" => $DataExpiracao,
             "external_reference" => $FaturaTexto,
